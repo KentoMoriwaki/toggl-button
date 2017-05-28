@@ -11,6 +11,8 @@ togglbutton.render('.window-header:not(.toggl)', {observe: true}, function (elem
     //trackedContainer = createTag('div', 'toggl-tracked'),
     //trackedElem = $('.other-actions'),
     projectElem = $('.board-header > a'),
+    boardElem = $('.window-header-inline-content .js-open-move-from-header'),
+    labelElems = document.querySelectorAll('.js-card-detail-labels-list .card-label'),
     descriptionElem = $('.js-move-card');
 
   if (!descriptionElem) {
@@ -25,6 +27,18 @@ togglbutton.render('.window-header:not(.toggl)', {observe: true}, function (elem
     className: 'trello',
     description: descFunc,
     projectName: projectElem.textContent,
+    tags: () => {
+      const tags = [];
+      if (boardElem) {
+        tags.push(boardElem.textContent);
+      }
+      if (labelElems) {
+        labelElems.forEach((e) => {
+          tags.push(e.textContent);
+        });
+      }
+      return tags;
+    },
     calculateTotal: true
   });
 
